@@ -1,0 +1,24 @@
+#container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 50%;
+  margin: 0 auto;
+  background-color: #522546;
+  padding: 1rem;
+}
+
+button {
+}
+
+h1 {
+  text-align: center;
+}
+
+body {
+  background-color: #311d3f;
+  color: white;
+}
+
+hr {
+  width: 60%;
+}

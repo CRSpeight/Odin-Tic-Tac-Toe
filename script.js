@@ -1,10 +1,12 @@
 const gameboard = (() => {
+  const button = "<button>BLANK</button>";
   const drawBoard = function () {
     const container = document.querySelector("#container");
-    container.innerHTML = "OOO <br> OOO <br> OOO";
+    container.innerHTML = button;
   };
-
   return { drawBoard };
 })();
 
-gameboard.drawBoard();
+const game = (() => {
+  gameboard.drawBoard();
+})();
