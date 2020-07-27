@@ -1,6 +1,10 @@
 const gameboard = (() => {
+  let boardState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  let currentPlayer = 1;
+
   const drawBoard = function () {
     const container = document.querySelector("#container");
+    container.innerHTML = "";
 
     // Creates Buttons in grid
     for (let i = 0; i < 9; i++) {
@@ -11,11 +15,21 @@ const gameboard = (() => {
       container.appendChild(button);
     }
 
-    //Function executed when a button is clicked
+    //Function executed when a tile/button is clicked
     function buttonClicked(e) {
-      console.log(this.dataset.index);
       let button = document.querySelector(".\\3" + this.dataset.index);
-      button.textContent = "X";
+
+      button.disabled = true;
+      if (currentPlayer == 1) {
+        button.textContent = "X";
+        boardState[this.dataset.index] = 1;
+        currentPlayer = 2;
+      } else {
+        button.textContent = "O";
+        boardState[this.dataset.index] = 2;
+        currentPlayer = 1;
+      }
+      console.log(boardState);
     }
 
     // Adds event listeners to all buttons
@@ -24,9 +38,33 @@ const gameboard = (() => {
       button.addEventListener("click", buttonClicked);
     });
   };
-  return { drawBoard };
+  const resetBoardState = function (a) {
+    boardState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  };
+  return { drawBoard, resetBoardState };
 })();
+
+const playerMaker = (name) => {
+  return { name };
+};
 
 const game = (() => {
   gameboard.drawBoard();
+  let players = [];
+  players.push(playerMaker("Chris"));
+  players.push(playerMaker("Test"));
+  console.log(players);
 })();
+
+//Win Conditions:
+// Left/Right
+// 0,1,2
+// 3,4,5
+// 6,7,8
+// Top/Bottom
+// 0,3,6
+// 1,4,7
+// 2,5,8
+// Diag
+// 0,4,8
+// 2,4,6
