@@ -29,7 +29,7 @@ const gameboard = (() => {
         boardState[this.dataset.index] = 2;
         currentPlayer = 1;
       }
-      console.log(boardState);
+      rules.checkWinner(boardState);
     }
 
     // Adds event listeners to all buttons
@@ -44,6 +44,30 @@ const gameboard = (() => {
   return { drawBoard, resetBoardState };
 })();
 
+const ui = (() => {
+  const displayWinner = function () {
+    console.log("<placeholder> wins!");
+  };
+  return { displayWinner };
+})();
+
+const logic = (() => {
+  const winStates = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  const checkWinner = function (board) {
+    winStates.forEach(function (state) {});
+  };
+  return { checkWinner };
+})();
+
 const playerMaker = (name) => {
   return { name };
 };
@@ -55,16 +79,3 @@ const game = (() => {
   players.push(playerMaker("Test"));
   console.log(players);
 })();
-
-//Win Conditions:
-// Left/Right
-// 0,1,2
-// 3,4,5
-// 6,7,8
-// Top/Bottom
-// 0,3,6
-// 1,4,7
-// 2,5,8
-// Diag
-// 0,4,8
-// 2,4,6
