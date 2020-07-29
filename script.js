@@ -1,5 +1,6 @@
 const gameboard = (() => {
   let boardState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  let moveCounter = 0;
   const resetBoardState = function (a) {
     boardState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   };
@@ -8,7 +9,8 @@ const gameboard = (() => {
   };
   const setBoardState = (i, player) => {
     boardState[i] = player;
-    logic.checkWinner(boardState, player);
+    moveCounter += 1;
+    logic.checkWinner(boardState, player, moveCounter);
   };
   return { resetBoardState, getBoardState, setBoardState };
 })();
@@ -68,17 +70,23 @@ const logic = (() => {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  const checkWinner = function (board, player) {
-    winStates.forEach(function (state) {
+  const checkWinner = function (board, player, moveCounter) {
+    for (state of winStates) {
       if (
         board[state[0]] == player &&
         board[state[1]] == player &&
         board[state[2]] == player
       ) {
         ui.displayWinner(player);
+        return;
       }
-    });
+    }
+    if (moveCounter == 9) {
+      console.log("Its a tie");
+      return;
+    }
   };
+
   return { checkWinner };
 })();
 
