@@ -1,7 +1,20 @@
 const gameboard = (() => {
   let boardState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  let currentPlayer = 1;
+  const resetBoardState = function (a) {
+    boardState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  };
+  const getBoardState = () => {
+    return boardState;
+  };
+  const setBoardState = (i, player) => {
+    boardState[i] = player;
+    logic.checkWinner(boardState, player);
+  };
+  return { resetBoardState, getBoardState, setBoardState };
+})();
 
+const ui = (() => {
+  let currentPlayer = 1;
   const drawBoard = function () {
     const container = document.querySelector("#container");
     container.innerHTML = "";
@@ -22,14 +35,13 @@ const gameboard = (() => {
       button.disabled = true;
       if (currentPlayer == 1) {
         button.textContent = "X";
-        boardState[this.dataset.index] = 1;
+        gameboard.setBoardState(this.dataset.index, 1);
         currentPlayer = 2;
       } else {
         button.textContent = "O";
-        boardState[this.dataset.index] = 2;
+        gameboard.setBoardState(this.dataset.index, 2);
         currentPlayer = 1;
       }
-      rules.checkWinner(boardState);
     }
 
     // Adds event listeners to all buttons
@@ -38,17 +50,11 @@ const gameboard = (() => {
       button.addEventListener("click", buttonClicked);
     });
   };
-  const resetBoardState = function (a) {
-    boardState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  };
-  return { drawBoard, resetBoardState };
-})();
 
-const ui = (() => {
-  const displayWinner = function () {
-    console.log("<placeholder> wins!");
+  const displayWinner = function (player) {
+    console.log("Player " + player + " wins!");
   };
-  return { displayWinner };
+  return { displayWinner, drawBoard };
 })();
 
 const logic = (() => {
@@ -62,8 +68,16 @@ const logic = (() => {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  const checkWinner = function (board) {
-    winStates.forEach(function (state) {});
+  const checkWinner = function (board, player) {
+    winStates.forEach(function (state) {
+      if (
+        board[state[0]] == player &&
+        board[state[1]] == player &&
+        board[state[2]] == player
+      ) {
+        ui.displayWinner(player);
+      }
+    });
   };
   return { checkWinner };
 })();
@@ -73,7 +87,7 @@ const playerMaker = (name) => {
 };
 
 const game = (() => {
-  gameboard.drawBoard();
+  ui.drawBoard();
   let players = [];
   players.push(playerMaker("Chris"));
   players.push(playerMaker("Test"));
