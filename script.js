@@ -3,6 +3,7 @@ const gameboard = (() => {
   let moveCounter = 0;
   const resetBoardState = function (a) {
     boardState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    ui.drawBoard();
   };
   const getBoardState = () => {
     return boardState;
@@ -56,6 +57,7 @@ const ui = (() => {
   const displayWinner = function (player) {
     console.log("Player " + player + " wins!");
   };
+
   return { displayWinner, drawBoard };
 })();
 
