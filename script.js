@@ -18,6 +18,7 @@ const gameboard = (() => {
 
 const ui = (() => {
   let currentPlayer = 1;
+  const messageBox = document.querySelector("#messageBox");
   const drawBoard = function () {
     const container = document.querySelector("#container");
     container.innerHTML = "";
@@ -54,11 +55,24 @@ const ui = (() => {
     });
   };
 
-  const displayWinner = function (player) {
-    console.log("Player " + player + " wins!");
+  const setWinState = function (idx1, idx2, idx3) {
+    let buttons = document.querySelectorAll("button");
+    buttons.forEach((button) => (button.disabled = true));
+    for (index of arguments) {
+      let winningButton = document.querySelector(".\\3" + index);
+      winningButton.classList.add("winButton");
+    }
   };
 
-  return { displayWinner, drawBoard };
+  const displayWinner = function (player) {
+    messageBox.textContent = "Player " + player + " wins!";
+  };
+
+  const updateMessage = function (message) {
+    messageBox.textContent = message;
+  };
+
+  return { displayWinner, drawBoard, updateMessage, setWinState };
 })();
 
 const logic = (() => {
@@ -80,11 +94,12 @@ const logic = (() => {
         board[state[2]] == player
       ) {
         ui.displayWinner(player);
+        ui.setWinState(state[0], state[1], state[2]);
         return;
       }
     }
     if (moveCounter == 9) {
-      console.log("Its a tie");
+      ui.updateMessage("It's a tie!");
       return;
     }
   };
