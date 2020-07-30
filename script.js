@@ -3,7 +3,9 @@ const gameboard = (() => {
   let moveCounter = 0;
   const resetBoardState = function (a) {
     boardState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    moveCounter = 0;
     ui.drawBoard();
+    ui.clearMessage();
   };
   const getBoardState = () => {
     return boardState;
@@ -26,7 +28,8 @@ const ui = (() => {
     // Creates Buttons in grid
     for (let i = 0; i < 9; i++) {
       const button = document.createElement("button");
-      button.classList = i;
+      // button.classList = i;
+      button.classList.add(i, "cell");
       button.dataset.index = i;
       button.textContent = "";
       container.appendChild(button);
@@ -56,7 +59,7 @@ const ui = (() => {
   };
 
   const setWinState = function (idx1, idx2, idx3) {
-    let buttons = document.querySelectorAll("button");
+    let buttons = document.querySelectorAll(".cell");
     buttons.forEach((button) => (button.disabled = true));
     for (index of arguments) {
       let winningButton = document.querySelector(".\\3" + index);
@@ -72,7 +75,11 @@ const ui = (() => {
     messageBox.textContent = message;
   };
 
-  return { displayWinner, drawBoard, updateMessage, setWinState };
+  const clearMessage = function () {
+    messageBox.innerHTML = "<br />";
+  };
+
+  return { displayWinner, drawBoard, updateMessage, setWinState, clearMessage };
 })();
 
 const logic = (() => {
