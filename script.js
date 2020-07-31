@@ -23,6 +23,7 @@ const ui = (() => {
   let modalVisible = true;
   const messageBox = document.querySelector("#messageBox");
   const drawBoard = function () {
+    currentPlayer = 1;
     const container = document.querySelector("#container");
     container.innerHTML = "";
 
