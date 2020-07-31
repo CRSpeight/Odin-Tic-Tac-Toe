@@ -20,6 +20,7 @@ const gameboard = (() => {
 
 const ui = (() => {
   let currentPlayer = 1;
+  let modalVisible = true;
   const messageBox = document.querySelector("#messageBox");
   const drawBoard = function () {
     const container = document.querySelector("#container");
@@ -28,7 +29,6 @@ const ui = (() => {
     // Creates Buttons in grid
     for (let i = 0; i < 9; i++) {
       const button = document.createElement("button");
-      // button.classList = i;
       button.classList.add(i, "cell");
       button.dataset.index = i;
       button.textContent = "";
@@ -52,7 +52,7 @@ const ui = (() => {
     }
 
     // Adds event listeners to all buttons
-    let buttons = document.querySelectorAll("button");
+    let buttons = document.querySelectorAll(".cell");
     buttons.forEach((button) => {
       button.addEventListener("click", buttonClicked);
     });
@@ -68,7 +68,7 @@ const ui = (() => {
   };
 
   const displayWinner = function (player) {
-    messageBox.textContent = "Player " + player + " wins!";
+    messageBox.textContent = game.getPlayers()[player - 1].name + " wins!";
   };
 
   const updateMessage = function (message) {
@@ -79,7 +79,33 @@ const ui = (() => {
     messageBox.innerHTML = "<br />";
   };
 
-  return { displayWinner, drawBoard, updateMessage, setWinState, clearMessage };
+  const modalToggle = function () {
+    const modal = document.querySelector(".modal");
+
+    if (modalVisible) {
+      modal.style.display = "none";
+    } else {
+      modal.style.display = "";
+    }
+    modalVisible = !modalVisible;
+  };
+
+  const modalSubmit = function () {
+    let form = document.querySelector("#playerForm");
+    game.makePlayer(form.elements[0].value);
+    game.makePlayer(form.elements[1].value);
+    modalToggle();
+  };
+
+  return {
+    displayWinner,
+    drawBoard,
+    updateMessage,
+    setWinState,
+    clearMessage,
+    modalToggle,
+    modalSubmit,
+  };
 })();
 
 const logic = (() => {
@@ -121,7 +147,14 @@ const playerMaker = (name) => {
 const game = (() => {
   ui.drawBoard();
   let players = [];
-  players.push(playerMaker("Chris"));
-  players.push(playerMaker("Test"));
-  console.log(players);
+
+  const makePlayer = function (name) {
+    players.push(playerMaker(name));
+    console.log(players);
+  };
+
+  const getPlayers = function () {
+    return players;
+  };
+  return { makePlayer, getPlayers };
 })();

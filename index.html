@@ -14,6 +14,27 @@
     <button id="restartBtn" onclick="gameboard.resetBoardState()">
       Restart
     </button>
+    <div class="modal">
+      <div class="modal_contents">
+        <form id="playerForm" onsubmit="return false">
+          X<input
+            type="text"
+            name="player1"
+            value="Player 1"
+            placeholder="Player 1 Name"
+          />
+          <br />
+          O<input
+            type="text"
+            name="player2"
+            value="Player 2"
+            placeholder="Player 2 Name"
+          />
+          <br />
+          <button id="modalSubmit" onclick="ui.modalSubmit()">Submit</button>
+        </form>
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

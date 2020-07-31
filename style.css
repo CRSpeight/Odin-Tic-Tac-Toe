@@ -27,6 +27,25 @@
   font-weight: bold;
 }
 
+.modal {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.74);
+}
+
+.modal_contents {
+  background-color: white;
+  color: black;
+  padding: 2.5rem;
+  border-style: solid;
+  border-color: gray;
+}
+
 .winButton {
   border-color: black;
 }
@@ -53,14 +72,29 @@ button:disabled {
 
 h1 {
   text-align: center;
+  margin-top: 0;
+  padding-top: 1rem;
 }
 
 body {
   background-color: #311d3f;
   color: white;
+  margin: 0;
 }
 
 hr {
   width: 50%;
   margin-bottom: 2rem;
+}
+
+input {
+  margin: 0.2rem;
+  text-align: center;
+  font-size: large;
+}
+
+#modalSubmit {
+  display: block;
+  margin: 0 auto;
+  margin-top: 0.5rem;
 }
